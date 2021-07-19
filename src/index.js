@@ -4,12 +4,11 @@ import path from 'path'
 const backProjectRootGit = (projectName) => {
     let excuteRoot = process.cwd().toString().trim();
     excuteRoot = excuteRoot.split(projectName)[0];
-    console.log(excuteRoot)
-    return excuteRoot+`${projectName}\\.git`
+    return path.join(excuteRoot,projectName,'.git')
 }
 async function getGitHeadInfo(projectName = '') {
     const root = backProjectRootGit(projectName)
-    let ref = await readFile(root+'\\HEAD');
+    let ref = await readFile(path.join(root, 'HEAD'));
     ref = (ref.toString().trim()).split(': ')
     const headPath = path.join(root, ref[1])
     let headHash = await readFile(headPath)
@@ -22,7 +21,7 @@ async function getGitHeadInfo(projectName = '') {
 }
 function getGitHeadInfoSync(projectName){
     const root = backProjectRootGit(projectName)
-    let ref = readFileSync(root+'\\HEAD');
+    let ref = readFileSync(path.join(root, 'HEAD'));
     ref = (ref.toString().trim()).split(': ')
     const headPath = path.join(root, ref[1])
     let headHash =  readFileSync(headPath)
