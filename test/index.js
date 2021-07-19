@@ -1,6 +1,9 @@
-const getGitHeadHash = require('./../dist/index')
+const {getGitHeadInfo,getGitHeadInfoSync } = require('./../dist/index')
 
 
-getGitHeadHash('getgithash').then(res => {
+getGitHeadInfo('getGitHashInfo').then(res => {
     console.log(res)
 })
+
+const info = getGitHeadInfoSync('getGitHashInfo')
+console.log(info, 'info')
