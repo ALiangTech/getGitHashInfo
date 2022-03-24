@@ -11,12 +11,11 @@ var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 const backProjectRootGit = (projectName) => {
     let excuteRoot = process.cwd().toString().trim();
     excuteRoot = excuteRoot.split(projectName)[0];
-    console.log(excuteRoot);
-    return excuteRoot+`${projectName}\\.git`
+    return path__default['default'].join(excuteRoot,projectName,'.git')
 };
 async function getGitHeadInfo(projectName = '') {
     const root = backProjectRootGit(projectName);
-    let ref = await promises.readFile(root+'\\HEAD');
+    let ref = await promises.readFile(path__default['default'].join(root, 'HEAD'));
     ref = (ref.toString().trim()).split(': ');
     const headPath = path__default['default'].join(root, ref[1]);
     let headHash = await promises.readFile(headPath);
@@ -29,7 +28,8 @@ async function getGitHeadInfo(projectName = '') {
 }
 function getGitHeadInfoSync(projectName){
     const root = backProjectRootGit(projectName);
-    let ref = fs.readFileSync(root+'\\HEAD');
+    console.log(path__default['default'].join(root, 'HEAD'), 'ss');
+    let ref = fs.readFileSync(path__default['default'].join(root, 'HEAD'));
     ref = (ref.toString().trim()).split(': ');
     const headPath = path__default['default'].join(root, ref[1]);
     let headHash =  fs.readFileSync(headPath);
